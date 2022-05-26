@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<pfsensepkgs>
+	<package>
+		<name>monit</name>
+		<descr>Barking at daemons</descr>
+		<website>https://mmonit.com/monit</website>
+		<version>%%PKGVERSION%%</version>
+		<configurationfile>monit.xml</configurationfile>
+	</package>
+</pfsensepkgs>

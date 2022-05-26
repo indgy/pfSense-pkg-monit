@@ -1,0 +1,3 @@
+pkg/monit.xml
+pkg/monit.inc
+%%DATADIR%%/info.xml
