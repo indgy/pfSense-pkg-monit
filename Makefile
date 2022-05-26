@@ -7,7 +7,7 @@ DISTFILES= # empty
 EXTRACT_ONLY=	# empty
 
 MAINTAINER= coreteam@pfsense.org
-COMMENT= pfSense package monit
+COMMENT= pfSense package for monit
 
 LICENSE= APACHE20
 
