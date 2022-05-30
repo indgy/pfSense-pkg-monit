@@ -6,6 +6,11 @@
 service monit stop
 sysrc -f /etc/rc.conf -x monit_enable
 
+# allow time to stop
+if [ -f /var/run/monit.pid ]; then
+  sleep 2
+fi
+
 if [ -f /usr/local/bin/monit ]; then
   rm /usr/local/bin/monit
 fi
