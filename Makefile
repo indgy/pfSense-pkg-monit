@@ -2,9 +2,6 @@ PORTNAME=	pfSense-pkg-monit
 PORTVERSION= 5.30.0
 PORTREVISION= 1
 CATEGORIES= sysutils
-MASTER_SITES=	# empty
-DISTFILES= # empty
-EXTRACT_ONLY=	# empty
 
 MAINTAINER= coreteam@pfsense.org
 COMMENT= pfSense package for monit
@@ -12,9 +9,6 @@ COMMENT= pfSense package for monit
 LICENSE= APACHE20
 
 RUN_DEPENDS= monit>0:sysutils/monit
-
-USES=
-
 NO_BUILD= yes
 NO_MTREE= yes
 
