@@ -4,4 +4,12 @@ if [ "${2}" != "POST-INSTALL" ]; then
 	exit 0
 fi
 
+# This is a hack just to get monit installed !!
+fetch https://mmonit.com/monit/dist/binary/5.32.0/monit-5.32.0-freebsd-x64.tar.gz
+tar -xvf monit-5.32.0-freebsd-x64.tar.gz
+cp monit-5.32.0/bin/monit /usr/local/bin/monit
+cp monit-5.32.0/conf/monitrc /usr/local/etc/monitrc
+rm -rf monit-5.32.0
+rm monit-5.32.0-freebsd-x64.tar.gz
+
 /usr/local/bin/php -f /etc/rc.packages %%PORTNAME%% ${2}

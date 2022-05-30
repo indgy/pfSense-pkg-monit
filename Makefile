@@ -8,7 +8,6 @@ COMMENT= pfSense package for monit
 
 LICENSE= APACHE20
 
-RUN_DEPENDS= monit>0:sysutils/monit
 NO_BUILD= yes
 NO_MTREE= yes
 
