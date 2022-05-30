@@ -23,8 +23,7 @@ fi
 chmod 0600 /usr/local/etc/monitrc
 
 # Create rc file
-echo <<EOF
-#!/bin/sh
+echo '#!/bin/sh
 
 # PROVIDE: monit
 # REQUIRE: NETWORKING SERVERS
@@ -63,7 +62,7 @@ monit_checkconfig()
 }
 
 run_rc_command "$1"
-EOF > /usr/local/etc/rc.d/monit
+' > /usr/local/etc/rc.d/monit
 chmod 0755 /usr/local/etc/rc.d/monit
 
 # Not sure this works on pfsense?
