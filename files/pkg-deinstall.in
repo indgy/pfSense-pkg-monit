@@ -1,3 +1,13 @@
 #!/bin/sh
 
 /usr/local/bin/php -f /etc/rc.packages %%PORTNAME%% ${2}
+
+# Hack to clean up hacky installation, hacking ftw? :(
+service monit stop
+sysrc -f /etc/rc.conf -x monit_enable
+
+rm /usr/local/bin/monit
+rm /usr/local/etc/rc.d/monit
+
+# Do not remove monitrc for the time being
+# rm /usr/local/etc/monitrc

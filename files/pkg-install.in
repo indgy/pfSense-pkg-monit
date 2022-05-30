@@ -4,12 +4,71 @@ if [ "${2}" != "POST-INSTALL" ]; then
 	exit 0
 fi
 
+#
 # This is a hack just to get monit installed !!
+#
+
+# Fetch and extract monit release
 fetch https://mmonit.com/monit/dist/binary/5.32.0/monit-5.32.0-freebsd-x64.tar.gz
 tar -xvf monit-5.32.0-freebsd-x64.tar.gz
+
+# Copy monit binary to local bin folder
 cp monit-5.32.0/bin/monit /usr/local/bin/monit
-cp monit-5.32.0/conf/monitrc /usr/local/etc/monitrc
-rm -rf monit-5.32.0
-rm monit-5.32.0-freebsd-x64.tar.gz
+
+# Do not clobber existing monitrc file
+if [ ! -f /usr/local/etc/monitrc ]; then
+  cp monit-5.32.0/conf/monitrc /usr/local/etc/monitrc
+fi
+# Always set correct permissions on rc file
+chmod 0600 /usr/local/etc/monitrc
+
+# Create rc file
+echo <<EOF
+#!/bin/sh
+
+# PROVIDE: monit
+# REQUIRE: NETWORKING SERVERS
+# BEFORE: DAEMON
+# KEYWORD: shutdown
+
+#
+# Add the following lines to /etc/rc.conf to enable monit:
+# monit_enable (bool):        Set to "NO" by default.
+#                             Set it to "YES" to enable monit
+# monit_flags (str):          Flags passed to monit on startup.
+#                             Default is "".
+#
+. /etc/rc.subr
+
+name=monit
+rcvar=monit_enable
+load_rc_config ${name}
+
+: ${monit_enable:=NO}
+
+extra_commands=reload
+restart_precmd=monit_checkconfig
+reload_precmd=monit_checkconfig
+
+default_config=/usr/local/etc/monitrc
+required_files=${default_config}
+command="/usr/local/bin/monit"
+command_args="-c ${default_config}"
+pidfile=/var/run/monit.pid
+
+monit_checkconfig()
+{
+	echo "Performing sanity check on monit configuration:"
+	${command} ${command_args} -t
+}
+
+run_rc_command "$1"
+EOF > /usr/local/etc/rc.d/monit
+chmod 0755 /usr/local/etc/rc.d/monit
+
+# Not sure this works on pfsense?
+sysrc -f /etc/rc.conf monit_enable=YES
+service monit start
+
 
 /usr/local/bin/php -f /etc/rc.packages %%PORTNAME%% ${2}
