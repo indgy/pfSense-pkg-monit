@@ -53,12 +53,6 @@
             <description>Enter your monitrc config below.</description>
             <type>textarea</type>
         </field>
-        <field>
-            <fielddescr>Extra flags</fielddescr>
-            <fieldname>extra_flags</fieldname>
-            <type>input</type>
-            <description>Extra flags to pass</description>
-        </field>
     </fields>
     <custom_php_validation_command>monit_validate_form($_POST, $input_errors);</custom_php_validation_command>
     <custom_php_resync_config_command>monit_sync_config();</custom_php_resync_config_command>
