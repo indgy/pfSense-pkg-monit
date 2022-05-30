@@ -6,8 +6,12 @@
 service monit stop
 sysrc -f /etc/rc.conf -x monit_enable
 
-rm /usr/local/bin/monit
-rm /usr/local/etc/rc.d/monit
+if [ -f /usr/local/bin/monit ]; then
+  rm /usr/local/bin/monit
+fi
+if [ -f /usr/local/etc/rc.d/monit ]; then
+  rm /usr/local/etc/rc.d/monit
+fi
 
 # Do not remove monitrc for the time being
 # rm /usr/local/etc/monitrc
